@@ -1,5 +1,5 @@
 #!groovy
-// Update dnsmasq config on preprod
+// Update nginx config on preprod
 properties([disableConcurrentBuilds()])
 
 pipeline {
@@ -31,7 +31,8 @@ pipeline {
 							branch: 'master'
 					    )
 					}
-					echo " =========== Выкачана ветка master репозитория php"					
+					echo " =========== Выкачана ветка master репозитория php"
+					echo	${GIT_BRANCH}
 				}
             }
         }

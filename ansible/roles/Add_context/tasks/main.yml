@@ -15,6 +15,11 @@
     owner: nginx
     group: nginx
 
+- name: remove pipefile
+  file:
+    path: /var/www/{{ branch }}/autobuild.jenkins
+    state: absent
+
 - name: create site.conf for new location
   template:
     src: site.conf.j2
