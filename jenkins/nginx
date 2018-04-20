@@ -22,7 +22,7 @@ pipeline {
             steps {
 				ansiblePlaybook(
 					playbook: 'ansible/nginx.yaml',
-					inventory: 'ansible/inventories/hosts',
+					inventory: 'ansible/inventory/hosts',
 					extras: '-e "target=nginx"'
 				)
 			}
