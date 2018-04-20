@@ -26,7 +26,7 @@ pipeline {
 					echo " =========== Выкачана ветка master репозитория infra"		
 					dir ('php') {
 						git(
-						    url: 'git@gitlab.dks.lanit.ru:elpass/php.git',
+						    url: 'git@github.com:kxxb-stage/php.git',
 							credentialsId: 'kxxb_git',
 							branch: 'master'
 					    )
