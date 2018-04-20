@@ -1,0 +1,6 @@
+---
+#### ADD site
+- name: Nginx reconfigure
+  hosts: "{{ target }}"
+  roles:
+    - Nginx

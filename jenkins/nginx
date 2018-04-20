@@ -12,7 +12,7 @@ pipeline {
             steps {
 				deleteDir() /* clean up our workspace */
                 git(
-					url: 'git@github.com:kxxb-stage/infra.git',
+					url: 'git@github.com:kxxb-stage/php.git',
 					credentialsId: 'kxxb_git',
 					branch: 'master'
 				)
@@ -21,9 +21,9 @@ pipeline {
         stage("Restart nginx") {
             steps {
 				ansiblePlaybook(
-					playbook: 'ansible/nginx.yaml',
+					playbook: 'ansible/add_context.yaml',
 					inventory: 'ansible/inventory/hosts',
-					extras: '-e "target=nginx"'
+					extras: '-e "target=nginx branch=master"'
 				)
 			}
         }
