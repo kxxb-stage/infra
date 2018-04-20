@@ -1,0 +1,31 @@
+#!groovy
+// Update dnsmasq config on preprod
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent { label 'master' }
+	options {
+		buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+	}
+    stages {
+        stage("Pull repository") {
+            steps {
+				deleteDir() /* clean up our workspace */
+                git(
+					url: 'https://github.com/kxxb-stage/infra.git',
+					credentialsId: 'kxxb_git',
+					branch: 'master'
+				)
+            }
+        }
+        stage("Restart nginx") {
+            steps {
+				ansiblePlaybook(
+					playbook: 'ansible/nginx.yaml',
+					inventory: 'ansible/inventories/hosts',
+					extras: '-e "target=nginx"'
+				)
+			}
+        }
+    }
+}

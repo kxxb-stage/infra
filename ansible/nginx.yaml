@@ -1,0 +1,10 @@
+---
+#### PA
+- name: Nginx reconfigure
+  hosts: "{{ target }}"
+
+  tasks:
+  - name: restart nginx service
+    service:
+      name: nginx
+      state: restarted 
