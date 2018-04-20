@@ -32,7 +32,7 @@ pipeline {
 					    )
 					}
 					echo " =========== Выкачана ветка master репозитория php"
-					echo {env.BRANCH_NAME} 
+					echo ${env.BRANCH_NAME} 
 				}
             }
         }
