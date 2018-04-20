@@ -8,23 +8,42 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
 	}
     stages {
-        stage("Pull repository") {
-            steps {
+		stage("Preparations") {
+			steps {
 				deleteDir() /* clean up our workspace */
-                git(
-					url: 'git@github.com:kxxb-stage/php.git',
-					credentialsId: 'kxxb_git',
-					branch: 'master'
-				)
+			}
+		}
+        stage("Pull repositories") {
+            steps {
+				script {
+					dir ('infra') {
+						git(
+						    url: 'git@github.com:kxxb-stage/infra.git',
+							credentialsId: 'kxxb_git',
+							branch: 'master'
+						)
+					}
+					echo " =========== Выкачана ветка master репозитория infra"		
+					dir ('php') {
+						git(
+						    url: 'git@gitlab.dks.lanit.ru:elpass/php.git',
+							credentialsId: 'kxxb_git',
+							branch: 'master'
+					    )
+					}
+					echo " =========== Выкачана ветка master репозитория php"					
+				}
             }
         }
         stage("Restart nginx") {
             steps {
-				ansiblePlaybook(
-					playbook: 'ansible/add_context.yaml',
-					inventory: 'ansible/inventory/hosts',
-					extras: '-e "target=nginx branch=master"'
-				)
+				dir ('infra') {
+					ansiblePlaybook(
+						playbook: 'ansible/add_context.yaml',
+						inventory: 'ansible/inventory/hosts',
+						extras: '-e "target=nginx branch=master"'
+					)
+				}
 			}
         }
     }

@@ -9,7 +9,7 @@
 
 - name: put files from repo to new nginx location dir
   copy:
-    src: ./php/
+    src: ../php/
     dest: /var/www/{{ branch }}
     mode: 0755
     owner: nginx
