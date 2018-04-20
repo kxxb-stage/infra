@@ -28,11 +28,10 @@ pipeline {
 						git(
 						    url: 'git@github.com:kxxb-stage/php.git',
 							credentialsId: 'kxxb_git',
-							branch: 'master'
+							branch: '${env.BRANCH_NAME}'
 					    )
 					}
-					echo " =========== Выкачана ветка master репозитория php"
-					echo ${env.BRANCH_NAME} 
+					echo " =========== Выкачана ветка ${env.BRANCH_NAME} репозитория php"					
 				}
             }
         }
