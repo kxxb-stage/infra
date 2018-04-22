@@ -1,0 +1,38 @@
+---
+- name: create new directory for nginx location
+  file:
+    path: /var/www/{{ branch }}
+    state: directory
+    mode: 0755
+    owner: nginx
+    group: nginx
+
+- name: put files from repo to new nginx location dir
+  copy:
+    src: php/
+    dest: /var/www/{{ branch }}
+    mode: 0755
+    owner: nginx
+    group: nginx
+
+- name: remove pipefile
+  file:
+    path: /var/www/{{ branch }}/autobuild.jenkins
+    state: absent
+
+- name: edit /etc/hosts for loop
+  lineinfile:
+    path: /etc/hosts
+    line: '127.0.0.1 {{ branch }}.2bcrm.ru'
+
+- name: edit /etc/hosts for external ip
+  lineinfile:
+    path: /etc/hosts
+    line: '159.65.205.33 {{ branch }}.2bcrm.ru'
+
+- name: create site.conf for new location
+  template:
+    src: site.conf.j2
+    dest: /etc/nginx/conf.d/{{ branch }}.conf
+  notify:
+    - reload nginx configuration

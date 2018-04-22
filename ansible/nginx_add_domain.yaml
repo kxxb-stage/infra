@@ -1,0 +1,6 @@
+---
+#### ADD domain
+- name: Nginx add domain
+  hosts: "{{ target }}"
+  roles:
+    - Nginx_add_domain

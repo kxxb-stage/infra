@@ -1,0 +1,6 @@
+---
+#### ADD location
+- name: Nginx add location
+  hosts: "{{ target }}"
+  roles:
+    - Nginx_add_location
