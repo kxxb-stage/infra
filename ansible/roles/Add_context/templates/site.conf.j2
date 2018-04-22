@@ -1,4 +1,4 @@
-location /{{ branch }} { 
+location /{{ branch }}/ { 
 	root /var/www/;
 	fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
  	fastcgi_index index.php;
